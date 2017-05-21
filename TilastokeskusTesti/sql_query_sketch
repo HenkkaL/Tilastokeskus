@@ -1,0 +1,12 @@
+CREATE TABLE startValues AS SELECT stockId, close AS startValue FROM stockvalues WHERE DATE(valueDate)='2015-11-08';
+
+CREATE TABLE endValues AS SELECT stockId, close AS endValue FROM stockvalues WHERE DATE(valueDate)='2015-11-10';
+
+CREATE TABLE totalValues AS SELECT startValues.stockId, startValues.startValue, endValues.endValue FROM startValues INNER JOIN endValues ON startValues.stockId=endValues.stockId;
+
+SELECT c.companyName, s.ticker, c.industryField, ((endValue - startValue) / startValue * 100) AS value FROM totalValues AS tv INNER JOIN stocks AS s ON tv.stockId=s.id INNER JOIN companies AS c ON  s.companyId=c.companyId ORDER BY value DESC;
+
+DROP TABLE startValues;
+DROP TABLE endValues;
+DROP TABLE totalValues;
+

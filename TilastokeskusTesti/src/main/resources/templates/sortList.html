@@ -1,0 +1,53 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Osakelistaus</title>
+        <meta charset="utf-8" />
+        <style>
+            table {
+                border-collapse: collapse;
+            }
+
+            table, th, td {
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <h1>Aikavälilistaus</h1>
+
+        <form method="get" action="/list">
+            <button type="submit">Listaa kaikki</button>
+        </form>        
+        <form method="POST" action="/sortlist">
+            <p>Valitse listauksen alku- ja loppupäivämäärä</p>
+            <div>
+                <label for="start"> Valitse tarkastelujakson alkupäivämäärä</label>
+                <input type="date" name="start" min="2015-11-05" max="2015-12-04"/> 
+                <label for="start"> Valitse tarkastelujakson loppupäivämäärä</label>
+                <input type="date" name="end" min="2015-11-06" max="2015-12-05"/>  
+                <input type="submit" value="Listaa osakkeet" />                    
+            </div>            
+        </form>    
+        <table>
+            <tr>
+                <th>Company Name </th>
+                <th>Ticker</th>
+                <th>Industry Field</th>
+                <th>Value change</th>
+            </tr>
+            <tr th:each="stock : ${stocks}">
+                <td th:text="${stock.company.companyName}"></td>
+                <td th:text="${stock.ticker}"></td>
+                <td th:text="${stock.company.industryField}"></td>
+                <td th:text="${stock.value}"></td>
+            </tr>
+        </table>
+
+
+
+    </body>
+</html>
